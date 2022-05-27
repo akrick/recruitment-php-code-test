@@ -4,16 +4,16 @@ namespace App\Service;
 
 class ProductHandler
 {
-    private $products = array();
 
     /**
      * 计算商品总金额
+     * @param array $products
      * @return int|mixed
      */
-    public function getTotalPrice(){
+    public function getTotalPrice(array $products){
         $totalPrice = 0;
-        foreach ($this->products as $product) {
-            $price = $product['price'] ?: 0;
+        foreach ($products as $product) {
+            $price = isset($product['price']) ? $product['price'] : 0;
             $totalPrice += $price;
         }
         return $totalPrice;
@@ -21,25 +21,31 @@ class ProductHandler
 
     /**
      * 把商品以金额排序（由大至小），并筛选商品种类是 “dessert” 的商品
+     * @param array $products
      * @return array
      */
-    public function sortFilter(){
-        array_multisort($this->products, array_column($this->products, 'price'), SORT_DESC);
+    public function sortFilter(array $products){
+        array_multisort($products, array_column($products, 'price'), SORT_DESC);
         return array_map(function($item){
             if ($item['type'] == 'dessert'){
                 return $item;
             }
-        }, $this->products);
+        }, $products);
     }
 
     /**
      * 把创建日期转换未 unix timestamp
+     * @param array $products
+     * @return array
      */
-    public function transformToUnixTimestamp(){
-        if (!empty($this->products)){
-            foreach ($this->products as &$item){
-                $item['create_at'] = strtotime($item['create_at']);
+    public function transformToUnixTimestamp(array $products){
+        if (!empty($products)){
+            foreach ($products as $key => $item){
+                $products[$key]['create_at'] = strtotime($item['create_at']);
             }
+            return $products;
+        }else{
+            return [];
         }
     }
 }
