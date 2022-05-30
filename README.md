@@ -10,3 +10,7 @@ composer install
 #执行单元测试
 ./vendor/phpunit/phpunit/phpunit tests/App/DemoTest.php
 ```
+
+
+
+<img title="" src="./微信截图_20220530162247.png" alt="">

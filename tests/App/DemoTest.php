@@ -26,14 +26,15 @@ class DemoTest extends TestCase {
         $request = new HttpRequest();
         $demo = new Demo($logger, $request);
         $json_data = $demo->get_user_info();
-        $result = array(
-            'error' => 0,
-            'data' => array(
-                'id' => 1,
-                "username" => "hello world"
-            ),
-        );
-        $this->expectOutputString(json_encode($result));
-        print $json_data;
+        $this->assertJson($json_data);
+//        $result = array(
+//            'error' => 0,
+//            'data' => array(
+//                'id' => 1,
+//                "username" => "hello world"
+//            ),
+//        );
+//        $this->expectOutputString(json_encode($result));
+//        print $json_data;
     }
 }
