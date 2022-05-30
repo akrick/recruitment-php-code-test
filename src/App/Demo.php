@@ -26,6 +26,6 @@ class Demo {
         } else {
             $this->_logger->error("fetch data error.");
         }
-        return null;
+        return "";
     }
 }
